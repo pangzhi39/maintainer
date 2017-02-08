@@ -16,7 +16,7 @@ case $HOSTNAME in
     db=(dd3840)
     ;;
 
-  S103250152829)     #28 组1备 组4备
+  S103250152829)     #58 组1备 组4备
     host=(g1_slave_28 g4_slave_28)
     db=(dd3840 dd8989)
     sock=(mysql.sock mysql_3307.sock)
