@@ -35,3 +35,18 @@ alias g4m="ssh 'root@103.20.195.60'"
 alias g5m="ssh 'root@210.245.214.162'"
 alias g6m="ssh 'root@210.245.214.198'"
 alias g6s="ssh 'root@103.250.15.66'"
+
+ssh_all_run()
+{
+   cmd=$1
+   g1m $cmd
+   g1s $cmd
+   g2m $cmd
+   g4m $cmd
+   g5m $cmd
+   g6m $cmd
+   g6s $cmd
+}
+
+alias all_test="ssh_all_run 'cd /home/maintainer/; ls -rtlh'"
+alias all_update="ssh_all_run 'cd /home/maintainer/; git pull origin master'"
