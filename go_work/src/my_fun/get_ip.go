@@ -2,28 +2,29 @@ package my_fun
  
 import (
     s "strings"
-    "flag"
-    "fmt"
+    // "flag"
+    // "fmt"
     "net"
     "io/ioutil"
     "net/http"
-    "os"
+    // "os"
 )
  
-var get_ip = flag.String("get_ip", "", "external|internal")
+// var get_ip = flag.String("get_ip", "", "external|internal")
  
-func main() {
-    fmt.Println("Usage of ./getmyip --get_ip=(external|internal)")
-    flag.Parse()
-    if *get_ip == "external" {
-        Get_external()
-    }
+// func main() {
+//     fmt.Println("Usage of ./getmyip --get_ip=(external|internal)")
+//     flag.Parse()
+//     if *get_ip == "external" {
+//         Get_external()
+//     }
  
-    if *get_ip == "internal" {
-        Get_internal()
-    }
+//     if *get_ip == "internal" {
+//         Get_internal()
+//     }
  
-}
+ 
+// }
  
 func Get_external() (string, error){
     resp, err := http.Get("http://myexternalip.com/raw")
@@ -50,7 +51,7 @@ func Get_internal() []string{
     for _, a := range addrs {
         if ipnet, ok := a.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
             if ipnet.IP.To4() != nil {
-                os.Stdout.WriteString(ipnet.IP.String() + "\n")
+                // os.Stdout.WriteString(ipnet.IP.String() + "\n")
                 ip_list = append(ip_list, ipnet.IP.String())
             }
         }

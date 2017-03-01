@@ -13,7 +13,7 @@ import (
 
 type MysqlSalveStatus struct {
    Db, Master_Host string
-   Master_Port int
+   Master_Port string
    Master_Log_File string 
    Read_Master_Log_Pos int64
 }
@@ -119,7 +119,7 @@ func CheckSlaveStatus() (MysqlSalveStatus, error) {
    var status MysqlSalveStatus
    status.Db = row["Replicate_Do_DB"]
    status.Master_Host = row["Master_Host"]
-   status.Master_Port, _ = strconv.Atoi(row["Master_Port"])
+   status.Master_Port, _ = row["Master_Port"]
    status.Master_Log_File = row["Master_Log_File"]
    status.Read_Master_Log_Pos, _ = strconv.ParseInt(row["Read_Master_Log_Pos"], 10, 0)
 
@@ -238,17 +238,3 @@ func QueryRow(sql_stmt string) (map[string]string) {
    }
 }
 
-func mysql_test() {
-   for ConnectNext() {
-      // GetMasterStatus()
-      row := QueryRow("show master status")
-      fmt.Println(row)
-
-      ret, err := CheckSlaveStatus()
-      fmt.Println(ret)
-      if err != nil {
-         fmt.Println(err.Error())
-      }
-   }
-
-}
