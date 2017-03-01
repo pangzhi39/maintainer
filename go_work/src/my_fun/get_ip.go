@@ -23,7 +23,6 @@ func main() {
         Get_internal()
     }
  
-    ShellRun()
 }
  
 func Get_external() (string, error){
@@ -58,4 +57,19 @@ func Get_internal() []string{
     }
 
     return ip_list
+}
+
+func GetHomeIp() (string, error){
+    resp, err := http.Get("http://103.250.15.58/ip.txt")
+    if err != nil {
+        return "", err
+    }
+    defer resp.Body.Close()
+   
+    ipByte, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        return "", err
+    }
+
+    return s.Replace(string(ipByte), "\n", "", -1), nil
 }

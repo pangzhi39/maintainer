@@ -50,7 +50,6 @@ for i in "${!db[@]}"; do
     sleep 15
     backup ${db[$i]} $socket drop_bill
     backup ${db[$i]} $socket out_bill
-    #backup ${db[$i]} $socket agent
     clean ${db[$i]} drop_bill
     clean ${db[$i]} out_bill
 done

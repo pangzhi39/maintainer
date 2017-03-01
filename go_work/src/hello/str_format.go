@@ -43,6 +43,8 @@ func main() {
    // "\"String\""
    fmt.Printf("%q\n", "\"String\"")
 
+   fmt.Printf("[%s][%q][%x]\n", "\n", "\n", "skd\nskld")
+
    fmt.Printf("%t\n", true)
 
    fmt.Fprintf(os.Stderr, "an %s\n", "error")
