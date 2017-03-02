@@ -11,6 +11,7 @@ alias cdw="cd /home/wwwroot"
 alias cdmt="cd /home/maintainer"
 alias mysql3307="mysql -S /tmp/mysql_3307.sock"
 alias mysql3308="mysql -S /tmp/mysql_3308.sock"
+alias mysql3309="mysql -S /tmp/mysql_3309.sock"
 
 alias ll="ls -rtlh"
 
