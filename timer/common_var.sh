@@ -44,8 +44,8 @@ case $HOSTNAME in
 
   S43243512425)   #40 组2备 组5备
     host=(g5_slave_40 g2_slave_40)
-    db=(dd3855 dd5670)
-    sock=(mysql.sock mysql_3307.sock mysql_3308.sock)
+    db=(dd3855 dd5670 dd1234 dd5120)
+    sock=(mysql.sock mysql_3307.sock mysql_3308.sock mysql_3309.sock)
     ;;
 
   s210245214165)   # 组6主
