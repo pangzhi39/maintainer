@@ -7,7 +7,7 @@ import (
  
 func TestShellRun(t *testing.T) {
 
-   lines, err := ShellRun("netstat -an | grep 59.188.43.8 | grep :3306 | grep ESTABLISHED | wc -l")
+   lines, err := ShellRun("netstat -an | grep 43.243.51.40 | grep ESTABLISHED | wc -l")
    if err != nil {
       //fmt.Println("Shell script error!", err.Error())
       t.Errorf("Shell script error:[%s]", err.Error())

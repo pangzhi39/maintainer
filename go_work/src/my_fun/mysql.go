@@ -125,23 +125,31 @@ func CheckSlaveStatus() (MysqlSalveStatus, error) {
 
    // 检查IO与SQL运行状态
    if row["Slave_IO_Running"] != "Yes" {
-      return status, errors.New("Slave_IO_Running Error")
+      errMsg := fmt.Sprintf("Slave_IO_Running Error:[%s]", row["Slave_IO_Running"])
+      return status, errors.New(errMsg)
    }
    if row["Slave_SQL_Running"] != "Yes" {
       return status, errors.New("Slave_SQL_Running Error")
    }
 
    // 检查网络连接状态
-   cmd := fmt.Sprintf("netstat -an | grep %s | grep ESTABLISHED | wc -l", row["Master_Host"])
-   lines, err := ShellRun(cmd)
-   if err != nil {
-      panic(err)
-   }
+   for i:=0; i<3; i++ {
+      cmd := fmt.Sprintf("netstat -an | grep %s | grep ESTABLISHED | wc -l", row["Master_Host"])
+      lines, err := ShellRun(cmd)
+      if err != nil {
+         panic(err)
+      }
 
-   // 连接数判断
-   connectNum, _ := strconv.Atoi(lines[0])
-   if connectNum < 2 {
-      return status, errors.New("netstat 连接数少于2 Error")
+      // 连接数判断
+      connectNum, _ := strconv.Atoi(lines[0])
+      if connectNum < 2 {
+         if i < 2 {
+            // 前两次判断连接数不足时，再次尝试
+            continue
+         }
+         return status, errors.New("netstat 连接数少于2 Error")
+      }
+      break
    }
 
    return status, nil

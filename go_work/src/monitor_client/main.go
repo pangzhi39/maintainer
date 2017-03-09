@@ -2,6 +2,7 @@ package main
  
 import (
    "fmt"
+   // "log"
    "strconv"
    "net/rpc"
    "my_fun"
@@ -10,7 +11,6 @@ import (
  
  
 func main() {
- 
    var reqMsg mc.RequestMessage_mysql
    // reply := new(mc.ResponseMessage)
 
@@ -22,13 +22,24 @@ func main() {
       reqMsg.ClientIp = ip
       reqMsg.Master.Ip = ip
    }
+   // log.Println(ip)
+
+   // 取RPC服务器IP，家里的
+   homeIp, err := my_fun.GetHomeIp()
+   if err != nil {
+      panic(err)
+   }
+   // log.Println(homeIp)
 
    // 连接远程服务
+   url := fmt.Sprintf("%s:%d", homeIp, 9000)
    var reply mc.ResponseMessage
-   client, err := rpc.DialHTTP("tcp", "127.0.0.1:3234")  
+   client, err := rpc.DialHTTP("tcp", url)  
    if err != nil {  
       fmt.Println(err.Error())  
-   }  
+      return
+   }
+   // log.Println("connect success")
   
 
    // 枚举每个MySQL实例
@@ -40,6 +51,7 @@ func main() {
       if row == nil {
          continue
       }
+      // log.Println("mysql query success")
       // fmt.Println(row)
 
       reqMsg.Master.DB = row["Binlog_Do_DB"]
@@ -54,29 +66,24 @@ func main() {
       reqMsg.Slave.DB = ret.Db
       reqMsg.Slave.LogFile = ret.Master_Log_File
       reqMsg.Slave.LogPos = ret.Read_Master_Log_Pos
+
       if err != nil {
          fmt.Println(err.Error())
          reqMsg.SyncErrorMsg = err.Error()
+      } else {
+         reqMsg.SyncErrorMsg = ""
       }
 
       err = client.Call("Monitor.RecevieMysqlStatus", &reqMsg, &reply)  
       if err != nil {  
          fmt.Println(err.Error())  
       } else {  
-         fmt.Println(reply)  
+         // fmt.Println(reply)
       }  
+      // log.Println("call server success")
 
-      fmt.Println(reqMsg)
+      // fmt.Println(reqMsg)
    }
-
-   // 取RPC服务器IP，家里的
-   homeIp, err := my_fun.GetHomeIp()
-   if err != nil {
-      fmt.Println(err)
-   } else {
-      fmt.Printf("[%s]\n", homeIp)
-   }
-
 
 
    // return
