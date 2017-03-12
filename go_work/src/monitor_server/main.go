@@ -70,7 +70,7 @@ func Listen() {
    rpc.HandleHTTP()  
 
    err := http.ListenAndServe("0.0.0.0:9000", nil)  
-   if err != nil {  
+   if err != nil {
       fmt.Println(err.Error())  
    }
 }

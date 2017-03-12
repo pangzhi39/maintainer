@@ -61,7 +61,7 @@ func Get_internal() []string{
 }
 
 func GetHomeIp() (string, error){
-    resp, err := http.Get("http://103.250.15.58/ip.txt")
+    resp, err := http.Get("http://103.250.12.58/ip.txt")
     if err != nil {
         return "", err
     }
