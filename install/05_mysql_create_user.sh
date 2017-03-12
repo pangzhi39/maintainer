@@ -61,6 +61,8 @@ replication()
       grant replication slave on *.* to 'repl_user'@'59.188.133.55' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'103.250.15.58' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'103.250.15.59' identified by 'repl7hj&huu';
+      grant replication slave on *.* to 'repl_user'@'103.250.12.58' identified by 'repl7hj&huu';
+      grant replication slave on *.* to 'repl_user'@'103.250.12.59' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'112.213.126.135' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'112.213.126.136' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'112.213.126.137' identified by 'repl7hj&huu';
@@ -80,6 +82,9 @@ replication()
       grant replication slave on *.* to 'repl_user'@'210.245.214.199' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'103.250.15.66' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'103.250.15.67' identified by 'repl7hj&huu';
+      grant replication slave on *.* to 'repl_user'@'103.17.116.37' identified by 'repl7hj&huu';
+      grant replication slave on *.* to 'repl_user'@'103.17.116.38' identified by 'repl7hj&huu';
+      grant replication slave on *.* to 'repl_user'@'103.17.116.39' identified by 'repl7hj&huu';
 
       FLUSH PRIVILEGES;
 
@@ -88,7 +93,7 @@ EOF
 
 log "开始运行Mysql建库与用户"
 
-user dd0000 /tmp/mysql.sock
+#user dd0000 /tmp/mysql.sock
 #replication dd5120 /tmp/mysql.sock
 
 #replication dd5670 /tmp/mysql_3307.sock
@@ -96,12 +101,14 @@ user dd0000 /tmp/mysql.sock
 
 #user ddcscs /tmp/mysql_3308.sock
 #                mysql_3308.sock
-#for i in "${!db[@]}"; do
-#    socket="/tmp/${sock[$i]}"
-#    log "$i" "${db[$i]}" "${host[$i]}" "$socket"
 
-#    grant ${db[$i]} $socket
-#done
+for i in "${!db[@]}"; do
+    socket="/tmp/${sock[$i]}"
+    log "$i" "${db[$i]}" "${host[$i]}" "$socket"
+
+    #grant ${db[$i]} $socket
+    replication ${db[$i]} $socket
+done
 
 log "运行Mysql建库与用户完成"
 
