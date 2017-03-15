@@ -85,6 +85,8 @@ replication()
       grant replication slave on *.* to 'repl_user'@'103.17.116.37' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'103.17.116.38' identified by 'repl7hj&huu';
       grant replication slave on *.* to 'repl_user'@'103.17.116.39' identified by 'repl7hj&huu';
+      grant replication slave on *.* to 'repl_user'@'210.245.214.244' identified by 'repl7hj&huu';
+      grant replication slave on *.* to 'repl_user'@'210.245.214.245' identified by 'repl7hj&huu';
 
       FLUSH PRIVILEGES;
 
